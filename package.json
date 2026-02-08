@@ -1,0 +1,28 @@
+{
+  "name": "change-contract-enforcer",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "contractctl": "contractctl/cli.js"
+  },
+  "description": "Change Contract Enforcer turns engineering intent into enforceable change contracts, using Cline as a headless executor that blocks unsafe or non-compliant code changes.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/prabhakaran-jm/change-contract-enforcer.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/prabhakaran-jm/change-contract-enforcer/issues"
+  },
+  "homepage": "https://github.com/prabhakaran-jm/change-contract-enforcer#readme"
+}
