@@ -1,0 +1,48 @@
+# Change Contract Enforcer – CI workflow
+# Evaluates uncommitted changes (or Cline output) against a contract.
+# Use verdict.json to gate merges.
+name: Contract Check
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
+
+jobs:
+  enforce:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - run: npm ci
+
+      # Evaluate current changes against contract (no Cline in CI by default)
+      - name: Run contract enforcer
+        run: |
+          npx contractctl run \
+            --contract contracts/dependency-diff-tests.v1.yaml \
+            --repo . \
+            --output verdict.json
+
+      - name: Upload verdict
+        uses: actions/upload-artifact@v4
+        with:
+          name: verdict
+          path: verdict.json
+
+      # Fail the job if verdict is FAIL
+      - name: Check verdict
+        run: |
+          STATUS=$(jq -r '.status' verdict.json)
+          if [ "$STATUS" != "PASS" ]; then
+            echo "Contract check FAILED: $(jq -r '.reason_code' verdict.json)"
+            echo "$(jq . verdict.json)"
+            exit 1
+          fi
+          echo "Contract check PASSED"

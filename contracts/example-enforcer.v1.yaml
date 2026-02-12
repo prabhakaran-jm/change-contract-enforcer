@@ -1,0 +1,4 @@
+name: example-enforcer-contract
+version: "1"
+description: This contract includes the example enforcer.
+exampleEnforcer: true

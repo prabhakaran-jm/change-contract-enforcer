@@ -1,0 +1,30 @@
+# Change Contract: dependency-diff-tests v1
+# Enforces dependency rules, diff size limits, and test requirements.
+#
+# Use with: contractctl run --contract contracts/dependency-diff-tests.v1.yaml --repo . --prompt "your task"
+
+version: "1"
+name: dependency-diff-tests
+description: Limit diff size, require tests, and gate dependency changes
+
+# Diff budget: max change volume
+diffBudget:
+  maxLinesAdded: 500
+  maxLinesRemoved: 200
+  maxFilesChanged: 20
+
+# Tests must exist and pass (set runTests: true when you have real tests)
+testsRequired:
+  runTests: false
+  mustPass: true
+  # Optional: command to run (default: npm test)
+  command: "npm test"
+
+# Dependency changes: restrict what can be added/removed
+dependencyGate:
+  allowAdd: true
+  allowRemove: false
+  # Optional: blocklist of package names that cannot be added
+  blocklist: []
+  # Optional: allowlist - if set, ONLY these can be added (empty = any)
+  allowlist: []
