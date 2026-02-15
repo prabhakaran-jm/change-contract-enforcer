@@ -25,7 +25,7 @@ jobs:
       # Evaluate current changes against contract (no Cline in CI by default)
       - name: Run contract enforcer
         run: |
-          npx contractctl run \
+          node contractctl/cli.js run \
             --contract contracts/dependency-diff-tests.v1.yaml \
             --repo . \
             --output verdict.json
